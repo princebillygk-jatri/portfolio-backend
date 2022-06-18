@@ -1,12 +1,16 @@
-FROM golang:1.11FROM golang:1.18
+FROM golang:1.18
 
 WORKDIR /usr/src/app
 
 # pre-copy/cache go.mod for pre-downloading dependencies and only redownloading them in subsequent builds if they change
-COPY go.mod go.sum ./
+COPY go.mod ./
 RUN go mod download && go mod verify
 
 COPY . .
-RUN go build -v -o /usr/local/bin/app ./...
+RUN go build -v -o /usr/local/bin/ ./...
 
-CMD ["app"]-
+CMD ["api"]-
+
+# Github package requirement
+LABEL org.opencontainers.image.source https://github.com/princebillyGK/my-portfolio-backend
+
